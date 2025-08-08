@@ -1,5 +1,5 @@
-use solana_program::pubkey::Pubkey;
 use solana_program_test::ProgramTestContext;
+use solana_pubkey::Pubkey;
 use std::{
     cell::RefCell,
     error::Error,

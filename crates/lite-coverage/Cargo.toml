@@ -13,10 +13,9 @@ serde = { workspace = true }
 jsonrpc-core = "18.0.0"
 bs58 = { version = "0.5.1", default-features = false }
 borsh = "1.5.7"
+solana-program-runtime = { workspace = true }
 solana-program-test = { workspace = true }
 solana-account = { workspace = true }
-solana-bpf-loader-program.workspace = true
-solana-program = { workspace = true }
 solana-keypair = { workspace = true }
 solana-signer = { workspace = true }
 solana-transaction = { workspace = true }

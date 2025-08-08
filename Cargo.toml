@@ -60,8 +60,8 @@ solana-program-entrypoint = "2.2"
 solana-program-option = "2.2"
 solana-program-pack = "2.2"
 solana-program-runtime = "2.3"
-solana-program-test = "2.3"
-#solana-program-test = { git = "https://github.com/LimeChain/program-test.git" }
+#solana-program-test = "2.3"
+solana-program-test = { git = "https://github.com/procdump/solana-program-test-2.3.git" }
 solana-pubkey = "2.3"
 solana-rent = "2.2"
 solana-runtime-transaction = "2.3"

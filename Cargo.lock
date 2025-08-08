@@ -2553,12 +2553,11 @@ dependencies = [
  "log",
  "serde",
  "solana-account",
- "solana-bpf-loader-program",
  "solana-instruction",
  "solana-keypair",
- "solana-program",
  "solana-program-entrypoint",
  "solana-program-error",
+ "solana-program-runtime",
  "solana-program-stubs",
  "solana-program-test",
  "solana-pubkey",
@@ -5825,8 +5824,7 @@ dependencies = [
 [[package]]
 name = "solana-program-test"
 version = "2.3.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "941e90d0ff6f155b71a57013fe59f3cb8c1a12e7d71009ba89af87266dc7897e"
+source = "git+https://github.com/procdump/solana-program-test-2.3.git#814d3a066112192b731c88806080669718e5fa6c"
 dependencies = [
  "agave-feature-set",
  "assert_matches",
@@ -5852,6 +5850,7 @@ dependencies = [
  "solana-genesis-config",
  "solana-hash",
  "solana-instruction",
+ "solana-instructions-sysvar",
  "solana-keypair",
  "solana-loader-v3-interface",
  "solana-log-collector",
@@ -6254,6 +6253,7 @@ dependencies = [
  "solana-svm-rent-collector",
  "solana-svm-transaction",
  "solana-system-interface",
+ "solana-system-program",
  "solana-system-transaction",
  "solana-sysvar",
  "solana-sysvar-id",
@@ -7137,8 +7137,10 @@ version = "2.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "21702e8b9fc8ae979a1c4693d09b6f91252ebad4398f6938a21cc686a637ce9f"
 dependencies = [
+ "bincode",
  "itertools 0.12.1",
  "log",
+ "rand 0.8.5",
  "serde",
  "serde_derive",
  "solana-account",

@@ -4,8 +4,7 @@ use solana_program_error::ProgramResult;
 use solana_program_stubs::declare_sol_loader_stubs;
 use solana_sysvar::program_stubs::SyscallStubs;
 
-use solana_instruction::Instruction;
-use solana_program::instruction::AccountMeta;
+use solana_instruction::{AccountMeta, Instruction};
 use solana_pubkey::Pubkey;
 use solana_sysvar::slot_history::AccountInfo;
 
