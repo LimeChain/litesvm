@@ -2540,6 +2540,35 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cd945864f07fe9f5371a27ad7b52a172b4b499999f1d97574c9fa68373937e12"
 
 [[package]]
+name = "lite-coverage"
+version = "0.1.0"
+dependencies = [
+ "base64 0.22.1",
+ "bincode",
+ "borsh 1.5.7",
+ "bs58",
+ "jsonrpc-core",
+ "lazy_static",
+ "libloading",
+ "log",
+ "serde",
+ "solana-account",
+ "solana-instruction",
+ "solana-keypair",
+ "solana-program-entrypoint",
+ "solana-program-error",
+ "solana-program-runtime",
+ "solana-program-stubs",
+ "solana-program-test",
+ "solana-pubkey",
+ "solana-sdk-ids",
+ "solana-signer",
+ "solana-sysvar",
+ "solana-transaction",
+ "tokio",
+]
+
+[[package]]
 name = "litemap"
 version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2559,6 +2588,7 @@ dependencies = [
  "indexmap",
  "itertools 0.14.0",
  "libsecp256k1",
+ "lite-coverage",
  "log",
  "qualifier_attr",
  "serde",
@@ -2589,6 +2619,7 @@ dependencies = [
  "solana-nonce",
  "solana-nonce-account",
  "solana-precompile-error",
+ "solana-program-entrypoint",
  "solana-program-error",
  "solana-program-option",
  "solana-program-pack",
@@ -2657,6 +2688,7 @@ dependencies = [
  "solana-epoch-schedule",
  "solana-hash",
  "solana-instruction",
+ "solana-keypair",
  "solana-last-restart-slot",
  "solana-message",
  "solana-pubkey",
@@ -5779,6 +5811,15 @@ dependencies = [
  "solana-transaction-context",
  "solana-type-overrides",
  "thiserror 2.0.14",
+]
+
+[[package]]
+name = "solana-program-stubs"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "92919225911e3dcfe67af6d012aa567ac812945db97b15141859bf4e28fa117c"
+dependencies = [
+ "lazy_static",
 ]
 
 [[package]]

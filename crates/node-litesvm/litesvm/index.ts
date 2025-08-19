@@ -1,87 +1,87 @@
 import {
-	Account,
-	AddressAndAccount,
-	Clock,
-	ComputeBudget,
-	EpochRewards,
-	EpochSchedule,
-	FailedTransactionMetadata,
-	FeatureSet,
-	SimulatedTransactionInfo as SimulatedTransactionInfoInner,
-	LiteSvm as LiteSVMInner,
-	Rent,
-	SlotHash,
-	SlotHistory,
-	StakeHistory,
-	TransactionMetadata,
+  Account,
+  AddressAndAccount,
+  Clock,
+  ComputeBudget,
+  EpochRewards,
+  EpochSchedule,
+  FailedTransactionMetadata,
+  FeatureSet,
+  SimulatedTransactionInfo as SimulatedTransactionInfoInner,
+  LiteSvm as LiteSVMInner,
+  Rent,
+  SlotHash,
+  SlotHistory,
+  StakeHistory,
+  TransactionMetadata,
 } from "./internal";
 export {
-	Account,
-	Clock,
-	ComputeBudget,
-	EpochRewards,
-	EpochSchedule,
-	FailedTransactionMetadata,
-	FeatureSet,
-	InnerInstruction,
-	Rent,
-	SlotHash,
-	SlotHistory,
-	SlotHistoryCheck,
-	StakeHistory,
-	StakeHistoryEntry,
-	TransactionMetadata,
-	TransactionReturnData,
+  Account,
+  Clock,
+  ComputeBudget,
+  EpochRewards,
+  EpochSchedule,
+  FailedTransactionMetadata,
+  FeatureSet,
+  InnerInstruction,
+  Rent,
+  SlotHash,
+  SlotHistory,
+  SlotHistoryCheck,
+  StakeHistory,
+  StakeHistoryEntry,
+  TransactionMetadata,
+  TransactionReturnData,
 } from "./internal";
 import {
-	AccountInfo,
-	PublicKey,
-	Transaction,
-	VersionedTransaction,
+  AccountInfo,
+  PublicKey,
+  Transaction,
+  VersionedTransaction,
 } from "@solana/web3.js";
 
 export type AccountInfoBytes = AccountInfo<Uint8Array>;
 
 function toAccountInfo(acc: Account): AccountInfoBytes {
-	const owner = new PublicKey(acc.owner());
-	return {
-		executable: acc.executable(),
-		owner,
-		lamports: Number(acc.lamports()),
-		data: acc.data(),
-		rentEpoch: Number(acc.rentEpoch()),
-	};
+  const owner = new PublicKey(acc.owner());
+  return {
+    executable: acc.executable(),
+    owner,
+    lamports: Number(acc.lamports()),
+    data: acc.data(),
+    rentEpoch: Number(acc.rentEpoch()),
+  };
 }
 
 function fromAccountInfo(acc: AccountInfoBytes): Account {
-	const maybeRentEpoch = acc.rentEpoch;
-	const rentEpoch = maybeRentEpoch || 0;
-	return new Account(
-		BigInt(acc.lamports),
-		acc.data,
-		acc.owner.toBytes(),
-		acc.executable,
-		BigInt(rentEpoch),
-	);
+  const maybeRentEpoch = acc.rentEpoch;
+  const rentEpoch = maybeRentEpoch || 0;
+  return new Account(
+    BigInt(acc.lamports),
+    acc.data,
+    acc.owner.toBytes(),
+    acc.executable,
+    BigInt(rentEpoch)
+  );
 }
 
 function convertAddressAndAccount(
-	val: AddressAndAccount,
+  val: AddressAndAccount
 ): [PublicKey, Account] {
-	return [new PublicKey(val.address), val.account()];
+  return [new PublicKey(val.address), val.account()];
 }
 
 export class SimulatedTransactionInfo {
-	constructor(inner: SimulatedTransactionInfoInner) {
-		this.inner = inner;
-	}
-	private inner: SimulatedTransactionInfoInner;
-	meta(): TransactionMetadata {
-		return this.inner.meta();
-	}
-	postAccounts(): [PublicKey, Account][] {
-		return this.inner.postAccounts().map(convertAddressAndAccount);
-	}
+  constructor(inner: SimulatedTransactionInfoInner) {
+    this.inner = inner;
+  }
+  private inner: SimulatedTransactionInfoInner;
+  meta(): TransactionMetadata {
+    return this.inner.meta();
+  }
+  postAccounts(): [PublicKey, Account][] {
+    return this.inner.postAccounts().map(convertAddressAndAccount);
+  }
 }
 
 /**
@@ -288,6 +288,20 @@ export class LiteSVM {
 	): TransactionMetadata | FailedTransactionMetadata | null {
 		return this.inner.airdrop(address.toBytes(), lamports);
 	}
+  
+  /**
+   * Adds a SBF avatar (i.e native program) necessary for generating code coverage.
+   * @param programs - an array of program names.
+   * @param additionalPrograms - an array of additional SBF programs to load.
+   * @param payer - payer for the transactions, should be the same as used with the LiteSVM object.
+   */
+  withCoverage(
+    programs: Array<[string, Uint8Array]>,
+    additionalPrograms: Array<[string, Uint8Array]>,
+    payer: Uint8Array
+  ) {
+    return this.inner.withCoverage(programs, additionalPrograms, payer);
+  }
 
 	/**
 	 * Adds an SBF program to the test environment from the file specified.
