@@ -17,12 +17,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: checkout repo
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+          cache-dependency-path: crates/node-litesvm/yarn.lock
       - name: Install dependencies
-        run: cd crates/node-litesvm && corepack enable && yarn install
-
-      - name: Build documentation
-        run: cd crates/node-litesvm && yarn docs:build
+        working-directory: crates/node-litesvm
+        run: yarn install
+      - name: Build with VitePress
+        working-directory: crates/node-litesvm
+        run: yarn predocs && yarn docs:build

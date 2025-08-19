@@ -1,8 +1,8 @@
 use {
     crate::programs_bytes::HELLO_WORLD_BYTES,
+    agave_feature_set::FeatureSet,
     litesvm::LiteSVM,
     litesvm_loader::{deploy_upgradeable_program, set_upgrade_authority},
-    solana_feature_set::FeatureSet,
     solana_instruction::{account_meta::AccountMeta, Instruction},
     solana_keypair::Keypair,
     solana_message::Message,
@@ -23,7 +23,7 @@ fn hello_world_with_store() {
 
     let program_kp = Keypair::new();
     let program_id = program_kp.pubkey();
-    svm.add_program(program_id, program_bytes);
+    svm.add_program(program_id, program_bytes).unwrap();
 
     let instruction = Instruction::new_with_bytes(
         program_id,
@@ -43,9 +43,8 @@ fn hello_world_with_store() {
 
 #[test_log::test]
 fn hello_world_with_deploy_upgradeable() {
-    let mut feature_set = FeatureSet::all_enabled();
-    // need to deactivate the disable_new_loader_v3_deployments feature
-    feature_set.deactivate(&solana_feature_set::disable_new_loader_v3_deployments::id());
+    let feature_set = FeatureSet::all_enabled();
+
     let mut svm = LiteSVM::default()
         .with_feature_set(feature_set)
         .with_builtins()

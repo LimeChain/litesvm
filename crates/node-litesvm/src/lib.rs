@@ -145,8 +145,8 @@ impl LiteSvm {
 
     #[napi]
     /// Includes the standard SPL programs
-    pub fn set_spl_programs(&mut self) {
-        self.0.set_spl_programs();
+    pub fn set_default_programs(&mut self) {
+        self.0.set_default_programs();
     }
 
     #[napi]
@@ -286,9 +286,15 @@ impl LiteSvm {
 
     #[napi]
     /// Adds am SBF program to the test environment.
-    pub fn add_program(&mut self, program_id: Uint8Array, program_bytes: &[u8]) {
+    pub fn add_program(&mut self, program_id: Uint8Array, program_bytes: &[u8]) -> Result<()> {
         self.0
             .add_program(convert_pubkey(program_id), program_bytes)
+            .map_err(|e| {
+                Error::new(
+                    Status::GenericFailure,
+                    format!("Failed to add program: {e}"),
+                )
+            })
     }
 
     #[napi(ts_return_type = "TransactionMetadata | FailedTransactionMetadata")]
