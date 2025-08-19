@@ -272,7 +272,7 @@ impl LiteSvm {
             .with_coverage(
                 progs,
                 additional_progs,
-                Keypair::from_bytes(&payer)
+                Keypair::try_from(&payer[..])
                     .map_err(|_| Error::new(Status::InvalidArg, "Invalid Payer Keypair bytes"))?,
             )
             .map_err(|e| {

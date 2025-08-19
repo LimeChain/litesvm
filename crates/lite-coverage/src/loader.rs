@@ -5,10 +5,9 @@ use crate::{
 };
 use core::str;
 use libloading::{Library, Symbol};
-use solana_program::{
-    account_info::AccountInfo, entrypoint::ProgramResult, program_error::ProgramError,
-    program_stubs::set_syscall_stubs, pubkey::Pubkey,
-};
+use solana_program_error::{ProgramError, ProgramResult};
+use solana_pubkey::Pubkey;
+use solana_sysvar::{program_stubs::set_syscall_stubs, slot_history::AccountInfo};
 use std::{
     collections::HashMap,
     path::PathBuf,
@@ -41,11 +40,16 @@ pub fn entrypoint(program_id: &Pubkey, accounts: &[AccountInfo], _data: &[u8]) -
         .get_current_instruction_context()
         .map_err(|_| ProgramError::InvalidArgument)?;
 
+    let mask_out_rent_epoch_in_vm_serialization = invoke_context
+        .get_feature_set()
+        .mask_out_rent_epoch_in_vm_serialization;
+
     let (mut parameter_bytes, _mem_region, serialized_account_meta_data) =
-        solana_bpf_loader_program::serialization::serialize_parameters(
+        solana_program_runtime::serialization::serialize_parameters(
             transaction_context,
             instruction_context,
             true, // copy_account_data // There is no VM so direct mapping can not be implemented here
+            mask_out_rent_epoch_in_vm_serialization,
         )
         .map_err(|_| ProgramError::InvalidArgument)?;
     let original_data_lens: Vec<_> = serialized_account_meta_data

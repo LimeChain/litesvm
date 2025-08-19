@@ -1,6 +1,7 @@
 use std::{io::Write, rc::Rc};
 
 use solana_keypair::Keypair;
+use solana_pubkey::Pubkey;
 
 use crate::{
     loader::{entrypoint, Loader},
@@ -9,7 +10,6 @@ use crate::{
 };
 use {
     solana_account::AccountSharedData,
-    solana_program::pubkey::Pubkey,
     solana_program_test::{processor, ProgramTest, ProgramTestContext},
     solana_transaction::versioned::VersionedTransaction,
     std::{cell::RefCell, sync::Arc},
