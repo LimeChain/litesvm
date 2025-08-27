@@ -105,3 +105,6 @@ codegen-units = 1
 
 [workspace.lints.clippy]
 result_large_err = "allow"
+
+[patch.crates-io]
+solana-sbpf = { git = "https://github.com/LimeChain/sbpf-coverage.git" }
